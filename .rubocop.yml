@@ -10,14 +10,24 @@ AllCops:
     - vendor/bundle/**/*
     - bin/*
     - Gemfile
+    - db/schema.rb
 
 # Missing top-level class documentation comment. を無視
 Style/Documentation:
   Enabled: false
 
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
 # Line is too long を無視
 Metrics/LineLength:
   Enabled: false
 
-Style/SymbolArray:
-  EnforcedStyle: brackets
+Metrics/MethodLength:
+  Max: 20
+  Exclude:
+    - "db/migrate/*.rb"
+
+# 日本語のコメントを許可する
+Style/AsciiComments:
+  Enabled: false
