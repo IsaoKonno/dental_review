@@ -11,6 +11,7 @@ AllCops:
     - bin/*
     - Gemfile
     - db/schema.rb
+    - db/fixtures/**/*
 
 # Missing top-level class documentation comment. を無視
 Style/Documentation:
@@ -19,15 +20,75 @@ Style/Documentation:
 Style/SymbolArray:
   EnforcedStyle: brackets
 
+Style/Lambda:
+  EnforcedStyle: literal
+
+Style/WordArray:
+  Enabled: false
+
+Style/RescueStandardError:
+  Enabled: false
+
+Layout/FirstParameterIndentation:
+  IndentationWidth: 4
+
+Layout/IndentHash:
+  IndentationWidth: 4
+  EnforcedStyle: consistent
+
+Layout/IndentAssignment:
+  IndentationWidth: 4
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+  IndentationWidth: 4
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+  IndentationWidth: 4
+
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+  IndentationWidth: 4
+
+Naming/UncommunicativeMethodParamName:
+  MinNameLength: 1
+
 # Line is too long を無視
 Metrics/LineLength:
   Enabled: false
 
-Metrics/MethodLength:
+Metrics/ClassLength:
+  Max: 500
+
+Metrics/CyclomaticComplexity:
   Max: 20
+
+Metrics/ParameterLists:
+  Max: 20
+
+# Metrics/BlockLength: Block has too many lines.
+Metrics/BlockLength:
+  Max: 150
+
+# Metrics/BlockLength: Block has too many lines.
+Metrics/MethodLength:
+  Max: 150
+
+Metrics/AbcSize:
+  Max: 100
   Exclude:
-    - "db/migrate/*.rb"
+    - 'db/migrate/*.rb'
+
+Metrics/PerceivedComplexity:
+  Enabled: false
 
 # 日本語のコメントを許可する
 Style/AsciiComments:
+  Enabled: false
+
+Style/RegexpLiteral:
+  AllowInnerSlashes: true
+
+Style/ClassAndModuleChildren:
   Enabled: false
