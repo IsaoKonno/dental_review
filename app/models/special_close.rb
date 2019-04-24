@@ -2,5 +2,5 @@
 
 class SpecialClose < ApplicationRecord
   belongs_to :clinic,
-             inverse_of: :special_closes
+      inverse_of: :special_closes
 end

@@ -1,0 +1,13 @@
+<div class="">
+  <%= tag.p "県：　　　　　　　　#{clinic.prefecture.name}" %>
+  <%= tag.p "医院名：　　　　　　#{clinic.name}" %>
+  <%= tag.p "郵便番号：　　　　　#{clinic.post_code}" %>
+  <%= tag.p "住所：　　　　　　　#{clinic.address}" %>
+  <%= tag.p "表示するかどうか：　#{clinic.display_flag}" %>
+  <%= tag.p "オンライン予約方法：#{clinic.how_to_online_reservation}" %>
+
+  <% clinic.accesses.each_with_index do |access, index| %>
+    <%= tag.p "アクセス#{index}：#{access.description}" %>
+  <% end %>
+  <%= tag.hr %>
+</div>

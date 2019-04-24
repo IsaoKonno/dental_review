@@ -2,5 +2,5 @@
 
 class StaffCount < ApplicationRecord
   belongs_to :clinic,
-             inverse_of: :staff_counts
+      inverse_of: :staff_counts
 end

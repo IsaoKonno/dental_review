@@ -8,10 +8,6 @@ class Clinic < ApplicationRecord
            dependent: :restrict_with_error,
            inverse_of: :clinic
 
-  has_many :appeal_icons,
-           dependent: :restrict_with_error,
-           inverse_of: :clinic
-
   has_many :benefits,
            dependent: :restrict_with_error,
            inverse_of: :clinic
@@ -27,6 +23,10 @@ class Clinic < ApplicationRecord
   has_many :clinic_movies,
            dependent: :restrict_with_error,
            inverse_of: :clinic
+
+  has_one :quickest_access,
+          dependent: :restrict_with_error,
+          inverse_of: :clinic
 
   has_many :features,
            dependent: :restrict_with_error,
@@ -49,10 +49,6 @@ class Clinic < ApplicationRecord
            inverse_of: :clinic
 
   has_many :service_details,
-           dependent: :restrict_with_error,
-           inverse_of: :clinic
-
-  has_many :special_cares,
            dependent: :restrict_with_error,
            inverse_of: :clinic
 

@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class FeatureMovieTest < ActiveSupport::TestCase
+class GlomouthFrontend::ClinicsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

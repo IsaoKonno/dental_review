@@ -1,0 +1,4 @@
+<%= form_with model:@clinic_form, url: glomouth_frontend_clinic_path, method: :patch, local: true do |f| %>
+  <%= f.hidden_field :id %>
+  <%= render 'form', f:f %>
+<% end %>

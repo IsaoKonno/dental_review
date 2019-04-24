@@ -4,5 +4,5 @@ class StaffProfileMovie < ApplicationRecord
   # include ::MovieUploader::Attachment.new(:movie)
 
   belongs_to :staff_profile,
-             inverse_of: :staff_profile_movies
+      inverse_of: :staff_profile_movies
 end

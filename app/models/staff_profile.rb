@@ -10,17 +10,16 @@ class StaffProfile < ApplicationRecord
   }.freeze
 
   enumerize :type,
-            in: ENUM_STAFF_TYPE_HASH,
-            default: :assistant
+      in: ENUM_STAFF_TYPE_HASH,
+      default: :assistant
 
   belongs_to :clinic
 
   has_many :staff_profile_images,
-           dependent: :destroy,
-           inverse_of: :staff_profile
+      dependent: :destroy,
+      inverse_of: :staff_profile
 
   has_many :staff_profile_movies,
-           dependent: :destroy,
-           inverse_of: :staff_profile
+      dependent: :destroy,
+      inverse_of: :staff_profile
 end
-

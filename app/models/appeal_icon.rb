@@ -10,9 +10,9 @@ class AppealIcon < ApplicationRecord
   }.freeze
 
   enumerize :type,
-            in: ENUM_APPEAL_ITEM_TYPE_HASH,
-            default: :immediate
+      in: ENUM_APPEAL_ITEM_TYPE_HASH,
+      default: :immediate
 
   belongs_to :clinic,
-             inverse_of: :appeal_icons
+      inverse_of: :appeal_icons
 end

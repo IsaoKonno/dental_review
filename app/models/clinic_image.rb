@@ -10,9 +10,9 @@ class ClinicImage < ApplicationRecord
   }.freeze
 
   enumerize :type,
-            in: ENUM_CLINIC_IMAGE_TYPE_HASH,
-            default: :inside
+      in: ENUM_CLINIC_IMAGE_TYPE_HASH,
+      default: :inside
 
   belongs_to :clinic,
-             inverse_of: :clinic_images
+      inverse_of: :clinic_images
 end

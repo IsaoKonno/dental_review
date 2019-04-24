@@ -2,5 +2,5 @@
 
 class Access < ApplicationRecord
   belongs_to :clinic,
-             inverse_of: :accesses
+      inverse_of: :accesses
 end

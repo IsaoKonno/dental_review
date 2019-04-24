@@ -2,5 +2,5 @@
 
 class Benefit < ApplicationRecord
   belongs_to :clinic,
-             inverse_of: :benefits
+      inverse_of: :benefits
 end
