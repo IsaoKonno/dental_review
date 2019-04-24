@@ -25,6 +25,7 @@
 
 <%= f.fields_for :accesses do |access_f| %>
   <div class="">
+    <%= access_f.hidden_field :id %>
     <%= access_f.label :description %>
     <%= access_f.text_area :description %>
   </div>

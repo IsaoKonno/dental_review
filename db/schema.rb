@@ -10,14 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_23_142317) do
+ActiveRecord::Schema.define(version: 2019_04_24_142349) do
 
   create_table "accesses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", comment: "アクセス", force: :cascade do |t|
     t.bigint "clinic_id"
-    t.text "description", null: false, comment: "アクセス詳細"
+    t.string "station", null: false, comment: "駅"
+    t.string "from_station", null: false, comment: "駅からのアクセス"
+    t.boolean "closest_flag", null: false, comment: "最寄りフラグ"
+    t.boolean "primary_flag", null: false, comment: "TOP表示優先度フラグ"
+    t.integer "base_access_id", comment: "基になるアクセスID"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["clinic_id"], name: "index_accesses_on_clinic_id"
+  end
+
+  create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", comment: "住所", force: :cascade do |t|
+    t.bigint "clinic_id"
+    t.string "post_code", null: false, comment: "郵便番号"
+    t.string "prefecture", null: false, comment: "都道府県"
+    t.string "city", null: false, comment: "市区町村"
+    t.string "block", null: false, comment: "番地町名"
+    t.string "building", comment: "ビル"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["clinic_id"], name: "index_addresses_on_clinic_id"
   end
 
   create_table "appeal_icons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", comment: "アピールアイコン", force: :cascade do |t|
@@ -84,47 +100,26 @@ ActiveRecord::Schema.define(version: 2019_04_23_142317) do
   create_table "clinics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", comment: "医院", force: :cascade do |t|
     t.bigint "prefecture_id"
     t.string "name", null: false, comment: "医院名"
+    t.boolean "display_flag", null: false, comment: "表示フラグ"
+    t.string "post_code", null: false, comment: "郵便番号"
     t.string "address", null: false, comment: "住所"
+    t.float "latitude", comment: "緯度"
+    t.float "longitude", comment: "経度"
+    t.string "official_url", comment: "公式URL"
+    t.string "appeal_icon_list", comment: "アピールアイコン"
     t.integer "reserve_tel", comment: "予約用電話番号"
     t.integer "online_reservable_type", comment: "オンライン予約可否"
     t.text "how_to_online_reservation", comment: "オンライン予約方法"
-    t.text "comment_for_emergency", comment: "急患への対応"
+    t.text "operation_time_info", comment: "開院時間・休診日"
+    t.text "special_care_info", comment: "特定開院情報"
     t.string "service_list", comment: "治療項目"
     t.string "facility_list", comment: "施設情報"
     t.text "first_consultation", comment: "初診の流れ"
+    t.text "comment_for_emergency", comment: "急患への対応"
     t.text "info", comment: "医院からのお知らせ"
-    t.string "official_url", comment: "公式URL"
-    t.float "latitude", comment: "緯度"
-    t.float "longitude", comment: "経度"
-    t.boolean "display_flag", null: false, comment: "表示フラグ"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["prefecture_id"], name: "index_clinics_on_prefecture_id"
-  end
-
-  create_table "feature_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", comment: "特徴紹介画像", force: :cascade do |t|
-    t.bigint "feature_id"
-    t.text "image_data", null: false, comment: "特徴紹介画像"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["feature_id"], name: "index_feature_images_on_feature_id"
-  end
-
-  create_table "feature_movies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", comment: "特徴紹介動画", force: :cascade do |t|
-    t.bigint "feature_id"
-    t.text "movie_url", null: false, comment: "特徴紹介動画"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["feature_id"], name: "index_feature_movies_on_feature_id"
-  end
-
-  create_table "features", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", comment: "医院の特徴", force: :cascade do |t|
-    t.bigint "clinic_id"
-    t.string "name", null: false, comment: "特徴名"
-    t.text "description", null: false, comment: "特徴詳細"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["clinic_id"], name: "index_features_on_clinic_id"
   end
 
   create_table "parkings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", comment: "駐車場", force: :cascade do |t|
@@ -143,31 +138,6 @@ ActiveRecord::Schema.define(version: 2019_04_23_142317) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["clinic_id"], name: "index_payment_options_on_clinic_id"
-  end
-
-  create_table "policies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", comment: "医院のこだわり", force: :cascade do |t|
-    t.bigint "clinic_id"
-    t.string "name", null: false, comment: "こだわり名"
-    t.text "description", null: false, comment: "こだわり詳細"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["clinic_id"], name: "index_policies_on_clinic_id"
-  end
-
-  create_table "policy_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", comment: "こだわり補足画像", force: :cascade do |t|
-    t.bigint "policy_id"
-    t.text "image_data", null: false, comment: "こだわり補足画像"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["policy_id"], name: "index_policy_images_on_policy_id"
-  end
-
-  create_table "policy_movies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", comment: "こだわり補足動画", force: :cascade do |t|
-    t.bigint "policy_id"
-    t.text "movie_url", null: false, comment: "こだわり補足動画"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["policy_id"], name: "index_policy_movies_on_policy_id"
   end
 
   create_table "prefectures", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", comment: "県", force: :cascade do |t|
@@ -247,7 +217,16 @@ ActiveRecord::Schema.define(version: 2019_04_23_142317) do
     t.index ["clinic_id"], name: "index_staff_profiles_on_clinic_id"
   end
 
+  create_table "targets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", comment: "こんな方におすすめ", force: :cascade do |t|
+    t.bigint "clinic_id"
+    t.text "description", null: false, comment: "こんな方におすすめ詳細"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["clinic_id"], name: "index_targets_on_clinic_id"
+  end
+
   add_foreign_key "accesses", "clinics"
+  add_foreign_key "addresses", "clinics"
   add_foreign_key "appeal_icons", "clinics"
   add_foreign_key "benefits", "clinics"
   add_foreign_key "brand_names", "payment_options"
@@ -255,14 +234,8 @@ ActiveRecord::Schema.define(version: 2019_04_23_142317) do
   add_foreign_key "clinic_images", "clinics"
   add_foreign_key "clinic_movies", "clinics"
   add_foreign_key "clinics", "prefectures"
-  add_foreign_key "feature_images", "features"
-  add_foreign_key "feature_movies", "features"
-  add_foreign_key "features", "clinics"
   add_foreign_key "parkings", "clinics"
   add_foreign_key "payment_options", "clinics"
-  add_foreign_key "policies", "clinics"
-  add_foreign_key "policy_images", "policies"
-  add_foreign_key "policy_movies", "policies"
   add_foreign_key "second_opinions", "clinics"
   add_foreign_key "service_details", "clinics"
   add_foreign_key "special_cares", "clinics"
@@ -271,4 +244,5 @@ ActiveRecord::Schema.define(version: 2019_04_23_142317) do
   add_foreign_key "staff_images", "staff_profiles", column: "staff_profiles_id"
   add_foreign_key "staff_movies", "staff_profiles", column: "staff_profiles_id"
   add_foreign_key "staff_profiles", "clinics"
+  add_foreign_key "targets", "clinics"
 end
