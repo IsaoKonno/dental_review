@@ -1,0 +1,34 @@
+<div class="">
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+
+<div class="">
+  <%= f.label :post_code %>
+  <%= f.text_field :post_code %>
+</div>
+
+<div class="">
+  <%= f.label :address %>
+  <%= f.text_field :address %>
+</div>
+
+<div class="">
+  <%= f.label :display_flag %>
+  <%= f.check_box :display_flag  %>
+</div>
+
+<div class="">
+  <%= f.label :how_to_online_reservation %>
+  <%= f.text_area :how_to_online_reservation %>
+</div>
+
+<%= f.fields_for :accesses do |access_f| %>
+  <div class="">
+    <%= access_f.label :description %>
+    <%= access_f.text_area :description %>
+  </div>
+<% end %>
+
+
+<%= f.submit %>
