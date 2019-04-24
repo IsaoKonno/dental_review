@@ -2,5 +2,5 @@
 
 class Parking < ApplicationRecord
   belongs_to :clinic,
-             inverse_of: :parkings
+      inverse_of: :parkings
 end

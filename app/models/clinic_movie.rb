@@ -10,9 +10,9 @@ class ClinicMovie < ApplicationRecord
   }.freeze
 
   enumerize :type,
-            in: ENUM_CLINIC_MOVIE_TYPE_HASH,
-            default: :inside
+      in: ENUM_CLINIC_MOVIE_TYPE_HASH,
+      default: :inside
 
   belongs_to :clinic,
-             inverse_of: :clinic_movies
+      inverse_of: :clinic_movies
 end

@@ -2,5 +2,5 @@
 
 class BrandName < ApplicationRecord
   belongs_to :payment_option,
-             inverse_of: :brand_names
+      inverse_of: :brand_names
 end

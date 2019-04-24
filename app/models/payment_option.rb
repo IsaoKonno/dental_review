@@ -15,12 +15,12 @@ class PaymentOption < ApplicationRecord
   }.freeze
 
   enumerize :type,
-            in: ENUM_PAYMENT_OPTION_TYPE_HASH,
-            default: :cash
+      in: ENUM_PAYMENT_OPTION_TYPE_HASH,
+      default: :cash
   enumerize :applicable_to,
-            in: ENUM_APPLICABLE_TO_TYPE_HASH,
-            default: :own
+      in: ENUM_APPLICABLE_TO_TYPE_HASH,
+      default: :own
 
   belongs_to :clinic,
-             inverse_of: :payment_options
+      inverse_of: :payment_options
 end

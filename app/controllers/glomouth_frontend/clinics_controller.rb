@@ -50,6 +50,6 @@ class ::GlomouthFrontend::ClinicsController < ApplicationController
     params.require(:forms_clinic_form).permit(
         :id, :name, :post_code, :address, :display_flag, :how_to_online_reservation,
         accesses_attributes: [:id, :clinic_id, :description]
-    )
+      )
   end
 end

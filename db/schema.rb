@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(version: 2019_04_23_142317) do
 
   create_table "feature_movies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", comment: "特徴紹介動画", force: :cascade do |t|
     t.bigint "feature_id"
-    t.text "movie_data", null: false, comment: "特徴紹介動画"
+    t.text "movie_url", null: false, comment: "特徴紹介動画"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["feature_id"], name: "index_feature_movies_on_feature_id"
@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(version: 2019_04_23_142317) do
 
   create_table "policy_movies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", comment: "こだわり補足動画", force: :cascade do |t|
     t.bigint "policy_id"
-    t.text "movie_data", null: false, comment: "こだわり補足動画"
+    t.text "movie_url", null: false, comment: "こだわり補足動画"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["policy_id"], name: "index_policy_movies_on_policy_id"

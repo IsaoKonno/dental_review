@@ -2,7 +2,7 @@
 
 class ::Forms::ClinicForm
   include ActiveModel::Model
-  include ActiveModel::Attributes
+  include ActiveModel::Attributes # text型が提供されていないためstring型で代用する。
 
   # Clinic
   attribute :id, :integer
@@ -41,18 +41,33 @@ class ::Forms::ClinicForm
     new(
         prefecture_id: Prefecture.first.id,
         accesses: [Access.new]
-    )
+      )
+  end
+
+  def self.load(clinic_id)
+    clinic = Clinic.find_by(id: clinic_id)
+    new(
+        clinic.attributes.except('created_at', 'updated_at').merge!(
+            accesses: clinic.accesses
+          )
+      )
   end
 
   def save_for_clinic
     return false if invalid?
-    create
+
+    if id.blank?
+      create
+    else
+      update
+    end
   end
 
   private
 
   def clinic_params
     {
+        id: id,
         prefecture_id: prefecture_id,
         name: name,
         post_code: post_code,
@@ -65,6 +80,18 @@ class ::Forms::ClinicForm
   def create
     clinic = Clinic.new(clinic_params)
     accesses.each { |access| clinic.accesses.build(access.attributes) }
+
+    clinic.save
+  end
+
+  def update
+    clinic = Clinic.find_by(id: clinic_params[:id])
+    return false if clinic.blank?
+
+    clinic.attributes = clinic_params.except('id')
+    accesses.each do |a|
+      clinic.accesses.find_or_initialize_by(id: a.attributes['id']).update(a.attributes.slice('description'))
+    end
 
     clinic.save
   end
